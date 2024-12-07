@@ -2,7 +2,7 @@ package fetcher
 
 import (
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -17,7 +17,7 @@ func FetchStats(url string) (string, error) {
 		return "", errors.New("non-200 status code")
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
