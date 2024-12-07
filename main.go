@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/melkoto/server-stats-collector/internal/checker"
@@ -12,7 +13,7 @@ import (
 func main() {
 	url := "http://srv.msk01.gigacorp.local/_stats"
 	errorCount := 0
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(500 * time.Millisecond)
 	defer ticker.Stop()
 
 	for range ticker.C {
@@ -21,6 +22,7 @@ func main() {
 			errorCount++
 			if errorCount >= 3 {
 				fmt.Println("Unable to fetch server statistic.")
+				os.Stdout.Sync()
 			}
 			continue
 		}
@@ -30,6 +32,7 @@ func main() {
 			errorCount++
 			if errorCount >= 3 {
 				fmt.Println("Unable to fetch server statistic.")
+				os.Stdout.Sync()
 			}
 			continue
 		}
@@ -46,15 +49,19 @@ func main() {
 
 		if msg := checker.CheckLoad(loadAvg); msg != "" {
 			fmt.Println(msg)
+			os.Stdout.Sync()
 		}
 		if msg := checker.CheckMemory(totalMem, usedMem); msg != "" {
 			fmt.Println(msg)
+			os.Stdout.Sync()
 		}
 		if msg := checker.CheckDisk(totalDisk, usedDisk); msg != "" {
 			fmt.Println(msg)
+			os.Stdout.Sync()
 		}
 		if msg := checker.CheckNetwork(totalNet, usedNet); msg != "" {
 			fmt.Println(msg)
+			os.Stdout.Sync()
 		}
 	}
 }
