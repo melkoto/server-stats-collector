@@ -7,7 +7,7 @@ import (
 
 func CheckLoad(load float64) string {
 	if load > 30 {
-		return fmt.Sprintf("Load Average is too high: %.2f", load)
+		return fmt.Sprintf("Load Average is too high: %d", int(load))
 	}
 	return ""
 }
@@ -40,11 +40,11 @@ func CheckNetwork(totalNet, usedNet float64) string {
 	if totalNet <= 0 {
 		return ""
 	}
-	usage := usedNet / totalNet
-	if usage > 0.9 {
-		freeBytes := totalNet - usedNet
-		freeMbit := int(math.Floor((freeBytes * 8) / (1024 * 1024)))
-		return fmt.Sprintf("Network bandwidth usage high: %d Mbit/s available", freeMbit)
+	netUsage := usedNet / totalNet
+	if netUsage > 0.9 {
+		freeNetBytes := totalNet - usedNet
+		freeNetMbit := (freeNetBytes * 8) / (1024 * 1024)
+		return fmt.Sprintf("Network bandwidth usage high: %d Mbit/s available", int(freeNetMbit))
 	}
 	return ""
 }
