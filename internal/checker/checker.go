@@ -43,8 +43,8 @@ func CheckNetwork(totalNet, usedNet float64) string {
 	netUsage := usedNet / totalNet
 	if netUsage > 0.9 {
 		freeNetBytes := totalNet - usedNet
-		freeNetMbit := freeNetBytes / (1024 * 1024)
-		return fmt.Sprintf("Network bandwidth usage high: %d Mbit/s available", int(freeNetMbit))
+		freeNetMbit := int(freeNetBytes / 1000000)
+		return fmt.Sprintf("Network bandwidth usage high: %d Mbit/s available", freeNetMbit)
 	}
 	return ""
 }
