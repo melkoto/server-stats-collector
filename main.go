@@ -12,7 +12,7 @@ import (
 func main() {
 	url := "http://srv.msk01.gigacorp.local/_stats"
 	errorCount := 0
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
 
 	for range ticker.C {
